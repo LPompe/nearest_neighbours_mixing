@@ -66,7 +66,7 @@ def mixing_matrix(k, X, y=None, metric='euclidean', algorithm='brute',
     
     hist = np.histogram2d(idcs, raveled_neighbour_idcs, bins=(k, len(y)))
     
-    return hist
+    return hist[0]
     
     
 def flatten(x):
