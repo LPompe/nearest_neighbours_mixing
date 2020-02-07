@@ -77,7 +77,7 @@ def create_nn(k, X, metric='euclidean', algorithm='brute',
     kwargs will be passed to knn
     """
     nn = NearestNeighbors(k, metric=metric, algorithm=algorithm, 
-                        n_jobs=n_jobs, kwargs)
+                        n_jobs=n_jobs, **kwargs)
     
     nn = nn.fit(X)
     return nn
@@ -87,7 +87,7 @@ def mds():
     """
     Non-standard multidimensional scaling with custom dissimilarity matrix
     """
-    pass
+    raise NotImplementedError()
         
         
 
