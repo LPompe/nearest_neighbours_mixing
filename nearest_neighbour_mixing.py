@@ -63,8 +63,10 @@ def mixing_matrix(k, X, y=None, metric='euclidean', algorithm='brute',
     idcs = np.arange(len(y)).repeat(k)
     raveled_neighbour_idcs = np.ravel(neighbour_idcs)
     
-    
     hist = np.histogram2d(idcs, raveled_neighbour_idcs, bins=(k, len(y)))
+    
+    
+    #TODO: correct for counts + log2
     
     return hist[0]
     
