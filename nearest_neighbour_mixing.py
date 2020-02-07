@@ -48,24 +48,37 @@ def mixing_matrix(k, X, y=None, metric='euclidean', algorithm='brute',
         additional arguments to pass to SKLEARN NN search
     """
     
+    X = flatten(X)
+    
     nn = create_nn(k, X, metric, algorithm, n_jobs, **kwargs)
     
     if y is None:
         y = X
         
-    neighbour_idcs = nn.kneighbors(y, 
-                                   return_distance=return_distance)
+    y = flatten(y)
+    neighbour_idcs = nn.kneighbors(y, return_distance=False)
     
     
     
-    idcs = np.arange(len(y))
+    idcs = np.arange(len(y)).repeat(k)
     raveled_neighbour_idcs = np.ravel(neighbour_idcs)
     
     
+    hist = np.histogram2d(idcs, raveled_neighbour_idcs, bins=(k, len(y)))
     
-    hist = np.histogram2d(idcs, raveled_neighbour_idcs, bins=(len(y), k))
     return hist
     
+    
+def flatten(x):
+    """
+    Flattens NxDxD2 matrix so that SKLEARN doesn't cry
+    if x is already NxD, does nothing
+    """
+    s = x.shape
+    if len(s) > 2:
+        return x.reshape(s[0], -1)
+    else:
+        return x
     
     
     
